@@ -2,9 +2,9 @@ name: Notifier
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, farmstack ]
   pull_request:
-    branches: [ main ]
+    branches: [ main,farmstack ]
 
 jobs:
 
