@@ -2,7 +2,7 @@ name: Notifier
 
 on:
   push:
-    branches: [ main, farmstack ]
+    branches: [ main, farm-stack-tes ]
   pull_request:
     branches: [ main,farmstack ]
 
