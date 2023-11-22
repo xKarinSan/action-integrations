@@ -1,4 +1,5 @@
 # from pymongo.mongo_client import MongoClient
+import logging
 from dotenv import load_dotenv
 import os 
 from backend.app.models.TodoModel import Todo
@@ -11,9 +12,11 @@ from motor import motor_asyncio
 
 load_dotenv()
 uri = os.getenv("DATABASE_URL")
-print("uri",uri)
-client = motor_asyncio.AsyncIOMotorClient(host=uri)
-database = client.TodoList
+client = motor_asyncio.AsyncIOMotorClient(host=uri,tls=True, tlsAllowInvalidCertificates=True)
+# logging.warning("client: ",client)
+
+database = client["TodoList"]
+# logging.warning("database: ",database)
 collection = database.todo
 
 
