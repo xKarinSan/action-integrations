@@ -1,8 +1,8 @@
 # from pymongo.mongo_client import MongoClient
-import logging
+# import logging
 from dotenv import load_dotenv
 import os 
-from backend.app.models.TodoModel import Todo
+# from backend.app.models.TodoModel import Todo
 # from app.models.TodoModel import Todo
 
 # mongodb Driver
@@ -13,9 +13,10 @@ from motor import motor_asyncio
 load_dotenv()
 uri = os.getenv("DATABASE_URL")
 client = motor_asyncio.AsyncIOMotorClient(host=uri,tls=True, tlsAllowInvalidCertificates=True)
-database = client["TodoList"]
+database = client["fastapi-experiment"]
+# database = client["TodoList"]
 # logging.warning("database: ",database)
-collection = database.todo
+# collection = database.todo
 
 
 # async def fetch_one_todo(title):

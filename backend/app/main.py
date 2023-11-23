@@ -1,5 +1,6 @@
+# =========== import fastapi ===============
 from typing import Union
-from fastapi import FastAPI,HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 # the mongodb functions
@@ -7,6 +8,11 @@ from backend.app.mongoclient import *
 # from app.mongoclient import *
 
 
+
+# =========== import routes ===============
+from backend.app.routers.EventRouters import event_router
+
+# =========== initialise app ===============
 app = FastAPI()
 origins =['http://localhost:8000']
 app.add_middleware(
@@ -24,18 +30,11 @@ def read_root():
     return {"msg": "Hello World"}
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
 
 
 
-# handle event on start; connect database
-
-
-# handle event on end; disconnect database
-
-
+# =============== event routes =================
+app.include_router(event_router)
 
 # =============== tutorial test =================
 # @app.get("/api/todo")
