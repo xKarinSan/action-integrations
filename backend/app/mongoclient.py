@@ -13,7 +13,13 @@ from motor import motor_asyncio
 load_dotenv()
 uri = os.getenv("DATABASE_URL")
 client = motor_asyncio.AsyncIOMotorClient(host=uri,tls=True, tlsAllowInvalidCertificates=True)
-database = client["fastapi-experiment"]
+database_name = os.getenv("DATABASE_NAME")
+database = client[database_name]
+
+env = os.environ
+print("env",env)
+
+
 # database = client["TodoList"]
 # logging.warning("database: ",database)
 # collection = database.todo
