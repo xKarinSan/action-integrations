@@ -1,9 +1,11 @@
 name: Backend testing
 on: 
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_call:
+    secrets:
+      DATABASE_NAME:
+        required: true
+      DATABASE_URL:
+        required: true
 
 jobs:
   build:
@@ -28,4 +30,7 @@ jobs:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: |
         pip install pytest pytest-cov httpx
+        python -c 'import os; print("DATABASE_NAME",os.getenv("DATABASE_NAME"))'
+        python -c 'import os; print("DATABASE_URL",os.getenv("DATABASE_URL"))'
+        python -c 'import os; print("environments:",os.environ)'
         pytest --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html

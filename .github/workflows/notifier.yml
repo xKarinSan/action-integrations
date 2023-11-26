@@ -1,13 +1,14 @@
 name: Notifier
 
 on:
-  push:
-    branches: [ main, farm-stack-test ]
-  pull_request:
-    branches: [ main,farm-stack-test ]
+  workflow_call:
+      secrets:
+        TELEGRAM_TO:
+          required: true
+        TELEGRAM_TOKEN:
+          required: true
 
 jobs:
-
   notifyTelegram:
     runs-on: ubuntu-latest
     steps:

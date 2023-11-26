@@ -1,0 +1,22 @@
+name: main
+on: 
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend_job:
+    uses: ./.github/workflows/backend.yml
+    secrets:
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+       
+  notification_job:
+    uses: ./.github/workflows/notifier.yml
+    needs: backend_job
+    secrets:
+      TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
+      TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+    
+  
