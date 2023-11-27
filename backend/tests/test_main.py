@@ -7,7 +7,6 @@ import os
 async def clean_up():
     database_name = os.getenv("DATABASE_NAME")
     await database_client.drop_database(database_name)
-    print("Cleaned up")
     return
     # for entity in range(len(entities)-1, -1, -1):
     #     client.delete("/"+entities[entity]+"/deleteall")

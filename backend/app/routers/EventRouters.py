@@ -8,7 +8,6 @@ event_router = APIRouter()
 # ============= POST =============
 @event_router.post("/api/event",tags=["Events","POST"],name="Create an events")
 async def create_event_route(event: Event):
-    print("event",event)
     event = dict(event)
     if not event:
         raise HTTPException(400, "Event is required")

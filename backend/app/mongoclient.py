@@ -17,7 +17,6 @@ database_name = os.getenv("DATABASE_NAME")
 database = database_client[database_name]
 
 env = os.environ
-print("env",env)
 
 
 # database = client["TodoList"]

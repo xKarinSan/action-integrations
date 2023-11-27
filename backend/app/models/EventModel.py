@@ -14,7 +14,6 @@ class Event(BaseModel):
 # ==================== CRUD operations ====================
 # ============= POST =============
 async def create_event_mongo(event):
-    print("[create_event_mongo] event",event)
     await event_collection.insert_one(event)
     return {"message":"Event created"}
 # ============= GET =============

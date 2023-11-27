@@ -24,7 +24,6 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    print("hello world")
     # print(os.environ["DATABASE_URL"])
     return {"msg": "Hello World"}
 
