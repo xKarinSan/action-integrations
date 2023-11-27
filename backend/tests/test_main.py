@@ -4,10 +4,11 @@ from backend.app.mongoclient import database_client
 
 import os
 
-async def clean_up():
+def clean_up():
     database_name = os.getenv("DATABASE_NAME")
-    await database_client.drop_database(database_name)
-    return
+    print("database_name: ",database_name)
+    database_client.drop_database(database_name)
+    
     # for entity in range(len(entities)-1, -1, -1):
     #     client.delete("/"+entities[entity]+"/deleteall")
 
@@ -15,9 +16,9 @@ async def clean_up():
 # ========================================FastAPI test========================================
 
 
-@pytest.fixture(autouse=True, scope="session")
-async def test_fixture():
-    await clean_up()
+@pytest.fixture(scope="module")
+def test_fixture():
+    clean_up()
     # yield will be ignored in pytest 4.0
-    yield
-    await clean_up()
+    yield "resource"
+    clean_up()

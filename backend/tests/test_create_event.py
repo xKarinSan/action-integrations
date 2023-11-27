@@ -2,6 +2,7 @@ from backend.tests.testconfig import api_client
 from backend.tests.test_main import test_fixture
 from datetime import datetime
 
+test_fixture
 def test_create_event_success():
     event_date = datetime.timestamp(datetime(2023, 12, 1))
     response = api_client.post("/api/event", json={"name": "Create new event test","event_date":event_date})

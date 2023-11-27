@@ -2,8 +2,6 @@
 # import logging
 from dotenv import load_dotenv
 import os 
-# from backend.app.models.TodoModel import Todo
-# from app.models.TodoModel import Todo
 
 # mongodb Driver
 
