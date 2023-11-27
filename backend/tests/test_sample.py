@@ -2,7 +2,7 @@ import sys
 import os 
 # sys.path.append("config")
 
-from backend.tests.testconfig import client
+from backend.tests.testconfig import api_client
 def func(x):
     return x + 1
 
@@ -13,6 +13,6 @@ def test_answer():
 
 
 def test_root():
-    response = client.get("/")
+    response = api_client.get("/")
     assert response.status_code == 200
     assert response.json() == {"msg": "Hello World"}
