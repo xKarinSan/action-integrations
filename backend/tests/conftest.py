@@ -1,26 +1,16 @@
 import pytest
 # from backend.tests.testconfig import api_client
-from backend.app.mongoclient import database_client
-
+from pymongo import MongoClient
 import os
 
-async def clean_up():
-    database_name = os.getenv("DATABASE_NAME")
-    print("database_name: ",database_name)
-    await database_client.drop_database(database_name)
-    
-    # for entity in range(len(entities)-1, -1, -1):
-    #     client.delete("/"+entities[entity]+"/deleteall")
-
+def clean_up(mongo_client):
+    mongo_client.drop_database(os.getenv("DATABASE_NAME"))
 
 # ========================================FastAPI test========================================
-
-
-@pytest.fixture(scope="session")
-async def test_fixture():
-    print("Setuppp")
-    await clean_up()
-    # yield will be ignored in pytest 4.0
+@pytest.fixture(scope="session",autouse=True)
+def database_reset():
+    mongo_client = MongoClient(os.getenv("DATABASE_URL"),tls=True, tlsAllowInvalidCertificates=True)
+    clean_up(mongo_client)
     yield "resource"
-    await clean_up()
+    clean_up(mongo_client)
     
