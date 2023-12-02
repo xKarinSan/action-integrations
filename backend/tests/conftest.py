@@ -1,7 +1,9 @@
 import pytest
 # from backend.tests.testconfig import api_client
+import sys
 from pymongo import MongoClient
 import os
+sys.path.append('./test_events')
 
 def clean_up(mongo_client):
     mongo_client.drop_database(os.getenv("DATABASE_NAME"))
