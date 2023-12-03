@@ -1,21 +1,32 @@
-# =========== import fastapi ===============
+# ======================== imports ========================
+# ====== import fastapi-relevant modules ======
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo.mongo_client import MongoClient
-
-# the mongodb functions
-
+from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 import os 
 
-# =========== import routes ===============
+# ====== import routes ======
 from backend.app.routers.EventRouters import event_router
 
-# =========== initialise app ===============
-load_dotenv()
-uri = os.getenv("DATABASE_URL")
 
-app = FastAPI()
+# ======================== initialisation ========================
+load_dotenv()
+
+# ====== startup/shutdown ======
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # initialise the database
+    app.mongodb_client = MongoClient(os.getenv("DATABASE_URL"),tls=True, tlsAllowInvalidCertificates=True)
+    app.database = app.mongodb_client[os.getenv("DATABASE_NAME")]
+    yield
+    # shut down the database
+    app.mongodb_client.close()
+
+
+# ====== init the fastAPI instance & configurations ======
+app = FastAPI(lifespan=lifespan)
 origins =['http://localhost:8000']
 app.add_middleware(
     CORSMiddleware,
@@ -25,20 +36,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ======================== adding routes ========================
+# ====== healthcheck ======
 @app.get("/")
 def read_root():
     return {"msg": "Hello World"}
 
 
-
-@app.on_event("startup")
-def startup_db_client():
-    app.mongodb_client = MongoClient(os.getenv("DATABASE_URL"),tls=True, tlsAllowInvalidCertificates=True)
-    app.database = app.mongodb_client[os.getenv("DATABASE_NAME")]
-
-@app.on_event("shutdown")
-def shutdown_db_client():
-    app.mongodb_client.close()
-
-# =============== event routes =================
+# ====== routes events ======
 app.include_router(event_router)
+

@@ -1,13 +1,16 @@
+# ======================== imports ========================
 from datetime import datetime
 from fastapi import APIRouter,HTTPException, Request
 from backend.app.models.EventModel import *
 from fastapi.encoders import jsonable_encoder
 
-event_router = APIRouter()
 
+# =================== intiialise router ===================
+event_router = APIRouter()
 
 # ==================== CRUD operations ====================
 # ============= POST =============
+# ===== create new event =====
 @event_router.post("/api/event",tags=["Events","POST"],name="Create an events")
 def create_event_route(request: Request,event: Event):
     event = jsonable_encoder(event)
@@ -30,6 +33,7 @@ def create_event_route(request: Request,event: Event):
     raise HTTPException(400, "Something went wrong")
 
 # ============= GET =============
+# ===== get all events =====
 @event_router.get("/api/event",tags=["Events","GET"],name="Get all events")
 async def get_all_events_route(request: Request):
     try:

@@ -1,22 +1,27 @@
+# ======================== imports ========================
 from fastapi.testclient import TestClient
+from pymongo import MongoClient
 from backend.app.main import app
 import pytest
 import sys
-from pymongo import MongoClient
 import os
 
-
+# ============ add the test_events folder in the directory to the path ============
 sys.path.append('./test_events')
+
+
+# ======================== helper functions ========================
 def clean_up(mongo_client):
     mongo_client.drop_database(os.getenv("DATABASE_NAME"))
 
-# ========== this is to reset the database ==========
+# ======================== fixtures ========================
+
+# ============ this is the startup and teardown for each test ============
 @pytest.fixture(scope="session",autouse=True)
 def database_reset():
-    
     mongo_client = MongoClient(os.getenv("DATABASE_URL"),tls=True, tlsAllowInvalidCertificates=True)
     clean_up(mongo_client)
-    yield "resource"
+    yield 
     clean_up(mongo_client)
     
 
