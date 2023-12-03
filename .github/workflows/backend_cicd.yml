@@ -51,7 +51,7 @@ jobs:
         (cd dependencies; zip -r9 ../../../../aws_lambda_artifact.zip -r .)
 
     - name: Upload zip file artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: aws_lambda_artifact
         path: aws_lambda_artifact.zip
@@ -71,7 +71,7 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
       # Step 2
       - name: Download aws_lambda_artifact.zip
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: aws_lambda_artifact
       # Step 3
