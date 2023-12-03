@@ -2,3 +2,5 @@
 aws_lambda_artifact
 .pytest_cache
 backend_deployment
+dependencies
+aws_lambda_artifact.zip
