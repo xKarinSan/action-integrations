@@ -1,23 +1,8 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-from backend.app.mongoclient import database
-
-event_collection = database.events
+from pydantic import BaseModel, Field
+import uuid;
 
 class Event(BaseModel):
+    id: str= Field(default_factory=uuid.uuid4, alias="_id")
     name:str
-    
     # just keep the timestamp
     event_date: int
-
-
-# ==================== CRUD operations ====================
-# ============= POST =============
-async def create_event_mongo(event):
-    await event_collection.insert_one(event)
-    return {"message":"Event created"}
-# ============= GET =============
-
-# ============= UPDATE =============
-
-# ============= DELETE =============
