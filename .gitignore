@@ -4,3 +4,4 @@ aws_lambda_artifact
 backend_deployment
 dependencies
 aws_lambda_artifact.zip
+.env

@@ -1,4 +1,4 @@
-name: Backend testing
+name: Backend integration
 on: 
   workflow_call:
     secrets:
@@ -31,3 +31,18 @@ jobs:
       run: |
         pip install pytest pytest-cov httpx
         pytest --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+    
+    - name: Install dependencies & move the backend code inside the dependencies
+      run: 
+        pip3 install -t dependencies -r backend/requirements.txt |
+        cp -a ./backend ./dependencies
+
+    - name: Zip the dependencies
+      run: |
+        (cd dependencies; zip .aws_lambda_artifact.zip -r .)
+
+    - name: Upload zip file artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: aws_lambda_artifact
+        path: aws_lambda_artifact.zip
