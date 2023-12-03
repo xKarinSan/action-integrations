@@ -7,7 +7,7 @@ on:
 
 jobs:
   backend_job:
-    uses: ./.github/workflows/backend.yml
+    uses: ./.github/workflows/backend_integration.yml
     secrets:
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
