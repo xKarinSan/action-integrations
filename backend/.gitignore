@@ -1,2 +1,5 @@
 *__pycache__
 .env
+/dependencies
+aws_lambda_artifact.zip
+aws_lambda_artifact

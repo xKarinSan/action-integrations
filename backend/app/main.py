@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pymongo.mongo_client import MongoClient
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
+from mangum import Mangum
 import os 
 
 # ====== import routes ======
@@ -46,3 +47,7 @@ def read_root():
 # ====== routes events ======
 app.include_router(event_router)
 
+
+
+# ======================== adding lambda handler ========================
+handler = Mangum(app)

@@ -1,0 +1,4 @@
+*./DS_Store
+aws_lambda_artifact
+.pytest_cache
+backend_deployment
