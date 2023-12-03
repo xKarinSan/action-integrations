@@ -49,10 +49,7 @@ jobs:
     - name: Zip the dependencies
       run: |
         (cd dependencies; zip -r9 aws_lambda_artifact.zip -r .)
-    - name: Zip the dependencies
-      run: |
-        ls -l |
-        ls 
+
 
     - name: Upload zip file artifact
       uses: actions/upload-artifact@v3
@@ -80,7 +77,7 @@ jobs:
           name: aws_lambda_artifact
       # Step 3
       - name: Upload to S3
-        run: aws s3 cp api.zip s3:// ${{ secrets.AWS_ACCESS_KEY_ID }}/aws_lambda_artifact.zip
+        run: aws s3 cp aws_lambda_artifact.zip s3:// ${{ secrets.AWS_ACCESS_KEY_ID }}/aws_lambda_artifact.zip
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
