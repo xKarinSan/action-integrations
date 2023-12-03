@@ -2,31 +2,11 @@ from backend.tests.testconfig import api_client
 from datetime import datetime
 
 # test_fixture
-
-def test_create_event_success(database_reset):
-    event_date = datetime.timestamp(datetime(2024, 12, 1))
-    response = api_client.post("/api/event", json={"name": "Create new event test","event_date":event_date})
+def test_get_all_events_success():
+    response = api_client.get("/api/event")
     assert response.status_code == 200
-    assert response.json() == {"message": "Event created"}
+    assert "events" in response.json()
+    # response.json() == {"message": "Event"}
+    # check if all events are there
 
 
-def test_create_event_unsuccessful_empty_name(database_reset):
-    event_date = int(datetime.timestamp(datetime(2024, 12, 1)))
-    response = api_client.post("/api/event", json={"name":"","event_date":event_date})
-    assert response.status_code == 400
-    assert response.json() == {"detail": "Event name is required"}
-
-
-def test_create_event_unsuccessful_empty_date(database_reset):
-    # event_date = datetime.datetime(2023, 12, 1)
-    response = api_client.post("/api/event", json={"name":"test event 1","event_date":-1})
-    assert response.status_code == 400
-    assert response.json() == {"detail": "Event date is required"}
-
-
-
-def test_create_event_unsuccessful_past_date(database_reset):
-    event_date = datetime.timestamp(datetime(2022, 12, 1))
-    response = api_client.post("/api/event", json={"name": "test event","event_date":event_date})
-    assert response.status_code == 400
-    assert response.json() == {"detail": "Invalid date"}
