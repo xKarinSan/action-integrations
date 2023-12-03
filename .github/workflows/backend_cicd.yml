@@ -48,7 +48,11 @@ jobs:
 
     - name: Zip the dependencies
       run: |
-        (cd dependencies; zip -r9 ../../../../aws_lambda_artifact.zip -r .)
+        (cd dependencies; zip -r9 aws_lambda_artifact.zip -r .)
+    - name: Zip the dependencies
+      run: |
+        ls -l |
+        ls 
 
     - name: Upload zip file artifact
       uses: actions/upload-artifact@v3
