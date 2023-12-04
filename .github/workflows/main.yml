@@ -6,6 +6,7 @@ on:
     branches: [ main ]
 
 jobs:
+  # CICD for backend
   backend_cicd:
     uses: ./.github/workflows/backend_cicd.yml
     secrets:
@@ -16,28 +17,8 @@ jobs:
       AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
       LAMBDA_FUNCTION_NAME: ${{ secrets.LAMBDA_FUNCTION_NAME }}
       BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
-  
-
-  # backend_integration:
-  #   uses: ./.github/workflows/backend_integration.yml
-  #   secrets:
-  #     DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-  #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  
-  
-  # backend_deployment:
-  #   uses: ./.github/workflows/backend_deployment.yml
-  #   needs: backend_integration
-  #   secrets:
-  #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #     AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-  #     LAMBDA_FUNCTION_NAME: ${{ secrets.LAMBDA_FUNCTION_NAME }}
-  #     BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
-  
-  
-  
        
+  # sends a tele message to upload sucessful changes
   notification_job:
     uses: ./.github/workflows/notifier.yml
     needs: backend_cicd
