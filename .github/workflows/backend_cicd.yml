@@ -33,10 +33,10 @@ jobs:
       - name: Install dependencies
         working-directory: ./backend
         run: |
-          python -m pip3 install --upgrade pip3
-          pip3 install pipreqs
+          python -m pip install --upgrade pip
+          pip install pipreqs
           pipreqs --force
-          pip3 install -r requirements.txt
+          pip install -r requirements.txt
 
       - name: Test with pytest
         working-directory: ./backend
@@ -44,7 +44,7 @@ jobs:
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          pip3 install pytest pytest-cov httpx
+          pip install pytest pytest-cov httpx
           pytest --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
 
       - name: Install dependencies & move the backend code inside the dependencies
