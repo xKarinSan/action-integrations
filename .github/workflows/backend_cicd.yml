@@ -50,7 +50,7 @@ jobs:
 
       - name: Install dependencies & move the backend code inside the dependencies
         run: |
-          pip3 install -t dependencies -r backend/requirements.txt
+          pip3 install -t dependencies -r ./backend/requirements.txt
           cp -a ./backend ./dependencies
 
       - name: Zip the dependencies
