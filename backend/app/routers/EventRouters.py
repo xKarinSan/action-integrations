@@ -12,7 +12,7 @@ event_router = APIRouter()
 # ============= POST =============
 # ===== create new event =====
 @event_router.post("/api/event",tags=["Events","POST"],name="Create an events")
-def create_event_route(request: Request,event: Event):
+async def create_event_route(request: Request,event: Event):
     event = jsonable_encoder(event)
     print("event",event)
     if not event:
