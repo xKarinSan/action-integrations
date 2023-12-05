@@ -61,7 +61,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: aws_lambda_artifact
-          path: ./dependencies/aws_lambda_artifact.zip
+          path: aws_lambda_artifact.zip
 
 
 
