@@ -46,10 +46,13 @@ async def create_event_route(request: Request,new_event: Event):
 async def get_all_events_route(request: Request):
     try:
         print("database",database)
+        # print("database[event]",database["event"])
+        # print(database.list_collection_names())
         events = []
-        for event in database["event"].find():
-            events.append(event)
-        print("[get_all_events_route] events",events)
+        if "event" in database.list_collection_names():  
+            for event in database["event"].find():
+                events.append(event)
+            print("[get_all_events_route] events",events)
         return {"events": events}
     except  Exception as e: 
         logging.error("[GET /api/event]"+str(e))
