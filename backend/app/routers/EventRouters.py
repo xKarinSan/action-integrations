@@ -45,10 +45,10 @@ async def create_event_route(request: Request,new_event: Event):
 @event_router.get("/api/event",tags=["Events","GET"],name="Get all events")
 async def get_all_events_route(request: Request):
     try:
+        print("database",database)
         events = []
         for event in database["event"].find():
             events.append(event)
-
         print("[get_all_events_route] events",events)
         return {"events": events}
     except  Exception as e: 
