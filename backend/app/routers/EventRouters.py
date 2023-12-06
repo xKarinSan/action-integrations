@@ -13,7 +13,7 @@ event_router = APIRouter()
 # ==================== CRUD operations ====================
 # ============= POST =============
 # ===== create new event =====
-@event_router.post("/",tags=["Events","POST"],name="Create an events")
+@event_router.post("/api/event",tags=["Events","POST"],name="Create an events")
 async def create_event_route(request: Request,new_event: Event):
     # try:
     new_event = jsonable_encoder(new_event)
@@ -41,10 +41,9 @@ async def create_event_route(request: Request,new_event: Event):
 
 # ============= GET =============
 # ===== get all events =====
-@event_router.get("/",tags=["Events","GET"],name="Get all events")
+@event_router.get("/api/event",tags=["Events","GET"],name="Get all events")
 async def get_all_events_route(request: Request):
     try:
-        print("request.app",str(request.app))
         events = []
         for event in request.app.database["event"].find():
             events.append(event)
@@ -52,7 +51,7 @@ async def get_all_events_route(request: Request):
         print("[get_all_events_route] events",events)
         return {"events": events}
     except  Exception as e: 
-        logging.error("[GET /api/event]"+str(e))
+        logging.error("[GET /api/event]"+e)
         raise HTTPException(400, "Something went wrong")
 
 # ============= UPDATE =============
