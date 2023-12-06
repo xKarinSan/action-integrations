@@ -2,6 +2,7 @@
 from datetime import datetime
 from fastapi import APIRouter,HTTPException, Request
 from backend.app.models.EventModel import *
+from backend.app.database import *
 from fastapi.encoders import jsonable_encoder
 import logging
 
@@ -27,8 +28,8 @@ async def create_event_route(request: Request,new_event: Event):
     if new_event["event_date"] < datetime.timestamp(datetime.now()):
         raise HTTPException(400, "Invalid date")
     
-    new_event = request.app.database["event"].insert_one(new_event)
-    created_event = request.app.database["event"].find_one({
+    new_event = database["event"].insert_one(new_event)
+    created_event = database["event"].find_one({
         "_id": new_event.inserted_id
     })
     if created_event:
@@ -45,13 +46,13 @@ async def create_event_route(request: Request,new_event: Event):
 async def get_all_events_route(request: Request):
     try:
         events = []
-        for event in request.app.database["event"].find():
+        for event in database["event"].find():
             events.append(event)
 
         print("[get_all_events_route] events",events)
         return {"events": events}
     except  Exception as e: 
-        logging.error("[GET /api/event]"+e)
+        logging.error("[GET /api/event]"+str(e))
         raise HTTPException(400, "Something went wrong")
 
 # ============= UPDATE =============
