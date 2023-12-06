@@ -3,6 +3,8 @@ from datetime import datetime
 from fastapi import APIRouter,HTTPException, Request
 from backend.app.models.EventModel import *
 from fastapi.encoders import jsonable_encoder
+import logging
+
 
 
 # =================== intiialise router ===================
@@ -12,25 +14,30 @@ event_router = APIRouter()
 # ============= POST =============
 # ===== create new event =====
 @event_router.post("/api/event",tags=["Events","POST"],name="Create an events")
-async def create_event_route(request: Request,event: Event):
-    event = jsonable_encoder(event)
-    print("event",event)
-    if not event:
+async def create_event_route(request: Request,new_event: Event):
+    # try:
+    new_event = jsonable_encoder(new_event)
+    print("event",new_event)
+    if not new_event:
         raise HTTPException(400, "Event is required")
-    if not event["name"]:
+    if not new_event["name"]:
         raise HTTPException(400, "Event name is required")
-    if not event["event_date"] or event["event_date"] < 0:
+    if not new_event["event_date"] or new_event["event_date"] < 0:
         raise HTTPException(400, "Event date is required")
-    if event["event_date"] < datetime.timestamp(datetime.now()):
+    if new_event["event_date"] < datetime.timestamp(datetime.now()):
         raise HTTPException(400, "Invalid date")
     
-    new_event = request.app.database["event"].insert_one(event)
+    new_event = request.app.database["event"].insert_one(new_event)
     created_event = request.app.database["event"].find_one({
         "_id": new_event.inserted_id
     })
     if created_event:
         return {'message': 'Event created'}
     raise HTTPException(400, "Something went wrong")
+    
+    # except Exception as e:
+    #     logging.error("[POST /api/event]"+e)
+    #     raise HTTPException(400, "Something went wrong")
 
 # ============= GET =============
 # ===== get all events =====
@@ -43,7 +50,8 @@ async def get_all_events_route(request: Request):
 
         print("[get_all_events_route] events",events)
         return {"events": events}
-    except: 
+    except  Exception as e: 
+        logging.error("[GET /api/event]"+e)
         raise HTTPException(400, "Something went wrong")
 
 # ============= UPDATE =============
