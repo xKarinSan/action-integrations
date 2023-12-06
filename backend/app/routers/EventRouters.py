@@ -50,7 +50,7 @@ async def get_all_events_route(request: Request):
         # print(database.list_collection_names())
         events = []
         if "event" in database.list_collection_names():  
-            for event in await database["event"].find():
+            for event in database["event"].find():
                 events.append(event)
             print("[get_all_events_route] events",events)
         return {"events": events}
