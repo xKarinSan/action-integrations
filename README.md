@@ -1,29 +1,90 @@
-# Telegram automation test.
+#  🚜 Farm Stack Test 
+This is a simple sample of a FARM stack applcation built from ground up, inclusive of github actions, automated testings and deployment to AWS. 
 
-## Aim
-This aims to help automate the process of manually informing our teammates on what we are doing and what changes we made so far.
+**NOTE: this is still under construction**
 
-## Setup Steps
-1) Go to @BotFather on Telegram.
-2) Type ```/newbot``` in the chat to create a telegram bot.
-3) You will then be given a bot token upon completion. **PLEASE DO NOT SHARE THE TOKEN WITH ANYONE**
-4) Search for your telegram bot or click ```t.me/<your_bot_name>``` at the completion message in step 3.
-5) Add your bot to your team's Telegram chat group and type something there.
-6) Click [here](https://clickalgo.com/telegram-chatid) and then paste your bot token.
-7) You should get your team chat ID from step 6
-8) Go to your project repository. Settings -> Secrets and Variables -> Actions
-9) Click "New Repository Secret"
-10) Fill in the fields such that:
-    - Name: TELEGRAM_TO
-    - Secret: Your team chat Id from step 7
-12) Click "Add secret"
-13) Repeat steps 9 to 12 but the field values are:
-    - Name: TELEGRAM_TOKEN
-    - Secret: Your telegram bot token from step 4
-15) Create a github action by:
-    - Create .github inside the root of your project
-    - Inside .github, create a new folder "workflows". This is where you will put all your necessary github actions.
-    - Inside your "workflows" folder, create a yml file called ```notifier.yml```. Paste the contents from [this link](https://github.com/xKarinSan/action-integrations/blob/main/.github/workflows/notifier.yml) into notifier.yml.
-16) You are all set!
+## Services used
+AWS Lambda
+AWS API Gateway
 
-**NOTE: This is still work in progress, please stay tuned!**
+## Dependencies
+Here are the list of dependencies or requirements needed to run the project.
+
+### Frontend Dependencies
+- ReactJS
+- Vite
+
+### Backend Dependencies
+- FastAPI for the API
+- PyMongo to allow MongoDB interactions between API and the database
+- Mangum to allow the API to handle lambda function events 
+
+## Deployment Infrastructure
+- AWS Lambda for FastAPI deployments
+- AWS Gateway for API security
+- MongoDB Atlas for the database
+- AWS Amplify to deploy the frontend UI
+
+## Setting Up
+**FIRST and FOREMOST, clone this repository**
+```
+   git clone https://github.com/xkarinsan/action-integrations.git
+```
+
+### Frontend Setup
+1. Go to the frontend directory and install the dependencies
+```
+cd frontend && npm i
+```
+2. Run the frontend (Your current directory should be in the frontend folder
+```
+npm run dev
+```
+
+### Backend Setup
+1. Go to the backend directory
+```
+cd backend
+```
+
+2. Install pipreqs (this will allow you to list the dependencies used in requirements.txt) and uvicorn (this allows you to run the FastAPI server)
+```
+pip install pipreqs uvicorn
+```
+
+3. Run the command (this sets the dependencies used in the current project
+```
+pipreqs --force
+```
+
+4. Install the dependencies from requirements.txt
+```
+pip install -r requirements.txt
+```
+
+5. Run the application (be in the root folder while doing this)
+
+**Note the following:**
+- backend.app.main is basically the package directory for python packages
+- :app refers to the FastAPI instance declared in main.py
+- --reload enables hot reload - whenever you make changes in the backend folder, the server automatically reloads
+```
+uvicorn backend.app.main:app --reload
+```
+
+## Testing
+
+### Backend Testing
+Type this in your terminal. This goes to the backend folder and then run all the test cases in pytest 
+```
+cd backend && pytest
+```
+**NOTE:**
+- Just type 'pytest' if you are already in the backend folder
+- Run this before you push anything to main. This reduces the chances of the tests being messed up in the github actions.
+
+## Github Actions
+
+
+## Contributor
+[<img src="https://github.com/xkarinsan.png" width="60px;"/>](https://github.com/xKarinSan)
