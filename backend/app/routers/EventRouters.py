@@ -14,7 +14,7 @@ event_router = APIRouter()
 # ==================== CRUD operations ====================
 # ============= POST =============
 # ===== create new event =====
-@event_router.post("/",tags=["Events","POST"],name="Create an events")
+@event_router.post("",tags=["Events","POST"],name="Create an events")
 async def create_event_route(new_event: Event):
     new_event = jsonable_encoder(new_event)
     if not new_event:
@@ -38,7 +38,7 @@ async def create_event_route(new_event: Event):
 
 # ============= GET =============
 # ===== get all events =====
-@event_router.get("/",tags=["Events","GET"],name="Get all events")
+@event_router.get("",tags=["Events","GET"],name="Get all events")
 async def get_all_events_route():
     try:
         events = []
