@@ -14,11 +14,9 @@ event_router = APIRouter()
 # ==================== CRUD operations ====================
 # ============= POST =============
 # ===== create new event =====
-@event_router.post("/api/event",tags=["Events","POST"],name="Create an events")
-async def create_event_route(request: Request,new_event: Event):
-    # try:
+@event_router.post("/",tags=["Events","POST"],name="Create an events")
+async def create_event_route(new_event: Event):
     new_event = jsonable_encoder(new_event)
-    print("event",new_event)
     if not new_event:
         raise HTTPException(400, "Event is required")
     if not new_event["name"]:
@@ -35,24 +33,18 @@ async def create_event_route(request: Request,new_event: Event):
     if created_event:
         return {'message': 'Event created'}
     raise HTTPException(400, "Something went wrong")
-    
-    # except Exception as e:
-    #     logging.error("[POST /api/event]"+e)
-    #     raise HTTPException(400, "Something went wrong")
+
+
 
 # ============= GET =============
 # ===== get all events =====
-@event_router.get("/api/event",tags=["Events","GET"],name="Get all events")
-async def get_all_events_route(request: Request):
+@event_router.get("/",tags=["Events","GET"],name="Get all events")
+async def get_all_events_route():
     try:
-        print("database",database)
-        # print("database[event]",database["event"])
-        # print(database.list_collection_names())
         events = []
         if "event" in database.list_collection_names():  
             for event in database["event"].find():
                 events.append(event)
-            print("[get_all_events_route] events",events)
         return {"events": events}
     except  Exception as e: 
         logging.error("[GET /api/event]"+str(e))

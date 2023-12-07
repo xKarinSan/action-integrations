@@ -14,21 +14,7 @@ from backend.app.routers.EventRouters import event_router
 
 # ======================== initialisation ========================
 load_dotenv()
-
-# ====== startup/shutdown ======
-# DO NOT USE FOR LAMBDA
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     # initialise the database
-#     app.mongodb_client = MongoClient(os.getenv("DATABASE_URL"),tls=True, tlsAllowInvalidCertificates=True)
-#     app.database = app.mongodb_client[os.getenv("DATABASE_NAME")]
-#     yield
-#     # shut down the database
-#     app.mongodb_client.close()
-
-
 # ====== init the fastAPI instance & configurations ======
-# app = FastAPI(lifespan=lifespan)
 app = FastAPI()
 origins =['http://localhost:8000']
 app.add_middleware(
@@ -38,16 +24,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # ======================== adding routes ========================
 # ====== healthcheck ======
 @app.get("/")
 def read_root():
     return {"msg": "Hello World"}
-
-
 # ====== routes events ======
-app.include_router(event_router)
+app.include_router(event_router,tags=["Events"],prefix="/api/event")
 
 
 
