@@ -1,5 +1,6 @@
 # ======================== imports ========================
 from datetime import datetime
+from backend.app.helperfunctions.mongohelpers import *
 from fastapi import APIRouter,HTTPException, Request
 from backend.app.models.EventModel import *
 from backend.app.database import *
@@ -26,11 +27,8 @@ async def create_event_route(new_event: Event):
     if new_event["event_date"] < datetime.timestamp(datetime.now()):
         raise HTTPException(400, "Invalid date")
     
-    new_event = database["event"].insert_one(new_event)
-    created_event = database["event"].find_one({
-        "_id": new_event.inserted_id
-    })
-    if created_event:
+    event_successfully_created = create_new_item("event",new_event)
+    if event_successfully_created:
         return {'message': 'Event created'}
     raise HTTPException(400, "Something went wrong")
 
@@ -42,10 +40,7 @@ async def create_event_route(new_event: Event):
 async def get_all_events_route():
     try:
         events = []
-        if "event" in database.list_collection_names():  
-            for event in database["event"].find():
-                events.append(event)
-        return {"events": events}
+        return {"events": get_all_items("event")}
     except  Exception as e: 
         logging.error("[GET /api/event]"+str(e))
         raise HTTPException(400, "Something went wrong")
