@@ -14,11 +14,11 @@ import { RegisteredEvent } from "./types/EventType";
 // ======================== main app ========================
 function App() {
     const [events, setEvents] = useState<RegisteredEvent[]>([
-        // {
-        //     id: "1",
-        //     name: "idk",
-        //     event_date: Math.floor(new Date().getTime() / 1000),
-        // },
+        {
+            id: "1",
+            name: "idk",
+            event_date: Math.floor(new Date().getTime() / 1000),
+        },
     ]);
     return (
         <>

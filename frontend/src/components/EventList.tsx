@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 // ======== chakraUI imports ========
-import { Card, Heading, Image, Text } from "@chakra-ui/react";
+import { Card, Container, Heading, Image, Text } from "@chakra-ui/react";
 
 // ======== type imports ========
 import { RegisteredEvent } from "../types/EventType";
@@ -26,15 +26,11 @@ function EventList({ events }: { events: RegisteredEvent[] }) {
         return `${day}/${month}/${year} ${hour}:${minute}:${second}`;
     };
     return (
-        <Card
-            border={"10px red"}
-            background={"white"}
-            width={["90%","60%"]}
-        >
+        <Card border={"10px red"} background={"white"} width={["90%", "60%"]}>
             <Heading as={"h2"}>Event List</Heading>
             <>
                 {events && events.length > 0 ? (
-                    <>
+                    <Container data-testid="eventlist-container">
                         {events.map((event: RegisteredEvent) => {
                             const { id, name, event_date } = event;
                             console.info("event", event);
@@ -63,27 +59,25 @@ function EventList({ events }: { events: RegisteredEvent[] }) {
                                 </Card>
                             );
                         })}
-                    </>
+                    </Container>
                 ) : (
-                    <>
-                        <Card
-                            id="noevents-placeholder"
-                            background={"#f66868"}
-                            padding={"20px"}
-                            margin={"15px"}
-                            data-testid="noevents-placeholder"
-                        >
-                            <Image
-                                src={NotFound}
-                                alt={"No events found"}
-                                width={"50px"}
-                                margin={"10px auto"}
-                            />
-                            <Heading as={"h6"} size={"sm"} color={"white"}>
-                                No events found
-                            </Heading>
-                        </Card>
-                    </>
+                    <Card
+                        id="noevents-placeholder"
+                        background={"#f66868"}
+                        padding={"20px"}
+                        margin={"15px"}
+                        data-testid="noevents-placeholder"
+                    >
+                        <Image
+                            src={NotFound}
+                            alt={"No events found"}
+                            width={"50px"}
+                            margin={"10px auto"}
+                        />
+                        <Heading as={"h6"} size={"sm"} color={"white"}>
+                            No events found
+                        </Heading>
+                    </Card>
                 )}
             </>
         </Card>
