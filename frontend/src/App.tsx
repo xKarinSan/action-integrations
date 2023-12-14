@@ -1,6 +1,6 @@
 // ======================== imports ========================
 // ======== react imports ========
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 
@@ -29,8 +29,13 @@ function App() {
         //     event_date: Math.floor(new Date().getTime() / 1000),
         // },
     ]);
+    useEffect(() => {
+        setEvents([]);
+    }, []);
+
     const submitEvent = async (submitEvent: RegisteredEvent) => {
-        console.info("submitEvent", submitEvent);
+        // console.info("submitEvent", submitEvent);
+        // console.info("env variable",import.meta.env.VITE_APP_BACKEND);
         await axios.post("http://localhost:8000/api/event", submitEvent);
     };
     return (

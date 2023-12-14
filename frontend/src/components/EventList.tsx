@@ -1,6 +1,5 @@
 // ======================== imports ========================
 // ======== react imports ========
-import { useState } from "react";
 
 // ======== chakraUI imports ========
 import { Card, Container, Heading, Image, Text } from "@chakra-ui/react";

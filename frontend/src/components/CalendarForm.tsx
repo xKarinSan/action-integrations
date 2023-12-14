@@ -16,7 +16,6 @@ import {
 import { RegisteredEvent } from "../types/EventType";
 
 // ======== asset imports ========
-import NotFound from "../assets/notfound.gif";
 
 // ======================== main app ========================
 function CalendarForm({
