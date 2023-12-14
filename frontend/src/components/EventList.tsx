@@ -3,37 +3,89 @@
 import { useState } from "react";
 
 // ======== chakraUI imports ========
-import { Card, Text } from "@chakra-ui/react";
+import { Card, Heading, Image, Text } from "@chakra-ui/react";
 
 // ======== type imports ========
 import { RegisteredEvent } from "../types/EventType";
 
-// ======================== main app ========================
+// ======== asset imports ========
+import NotFound from "../assets/notfound.gif";
 
+// ======================== main app ========================
 function EventList({ events }: { events: RegisteredEvent[] }) {
+    //  =========== helper functions ===========
+    const formattedDate = (timestampDate: number) => {
+        console.log("[formattedDate] timestampDate", timestampDate);
+        const date = new Date(timestampDate * 1000);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+        const second = date.getSeconds();
+        return `${day}/${month}/${year} ${hour}:${minute}:${second}`;
+    };
     return (
-        <Card border={"10px red"} background={"red"}>
-            <Text>Event List</Text>
-            {events && events.length > 0 ? (
-                <>
-                    {events.forEach((event: RegisteredEvent) => {
-                        const { id, name } = event;
-                        console.info("event", event);
-                        // alert(name)
-                        return (
-                            <Card key={id}>
-                                <Text>{name}</Text>
-                            </Card>
-                        );
-                    })}
-                </>
-            ) : (
-                <>
-                    <Card id="noevents-placeholder">
-                        <Text>No events found</Text>
-                    </Card>
-                </>
-            )}
+        <Card
+            border={"10px red"}
+            background={"white"}
+            width={["90%","60%"]}
+        >
+            <Heading as={"h2"}>Event List</Heading>
+            <>
+                {events && events.length > 0 ? (
+                    <>
+                        {events.map((event: RegisteredEvent) => {
+                            const { id, name, event_date } = event;
+                            console.info("event", event);
+                            return (
+                                <Card
+                                    key={id}
+                                    background={"#5773ff"}
+                                    margin={"10px"}
+                                    color={"white"}
+                                >
+                                    <Heading
+                                        as={"h4"}
+                                        size={"lg"}
+                                        textAlign={"left"}
+                                        padding={"5px 5px 5px 20px"}
+                                        // paddingLeft={"20px"}
+                                    >
+                                        Name: {name}
+                                    </Heading>
+                                    <Text
+                                        textAlign={"left"}
+                                        padding={"5px 5px 5px 20px"}
+                                    >
+                                        Date: {formattedDate(event_date)}
+                                    </Text>
+                                </Card>
+                            );
+                        })}
+                    </>
+                ) : (
+                    <>
+                        <Card
+                            id="noevents-placeholder"
+                            background={"#f66868"}
+                            padding={"20px"}
+                            margin={"15px"}
+                            data-testid="noevents-placeholder"
+                        >
+                            <Image
+                                src={NotFound}
+                                alt={"No events found"}
+                                width={"50px"}
+                                margin={"10px auto"}
+                            />
+                            <Heading as={"h6"} size={"sm"} color={"white"}>
+                                No events found
+                            </Heading>
+                        </Card>
+                    </>
+                )}
+            </>
         </Card>
     );
 }

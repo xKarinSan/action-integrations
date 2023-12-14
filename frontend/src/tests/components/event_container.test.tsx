@@ -1,20 +1,24 @@
 // ======================== imports ========================
 // ======== vitest imports ========
-import { screen } from "@testing-library/react";
+import { render,screen } from "@testing-library/react";
 import { describe, it, expect, test } from "vitest";
-
+import EventList from "../../components/EventList";
 // ======== component imports ========
-
+// import {EventList}
 // ======================== test cases ========================
 // case: No events
 describe("No events", () => {
     it("Empty placeholder shows", () => {
-        // expect(screen.getAllByTestId("noevents-placeholder").length).toBe(1);
+        const defaultProps = {
+            events :[]
+        }
+        render(<EventList events={[]} />);
+        expect(screen.getAllByTestId("noevents-placeholder").length).toBe(1);
     });
 });
 
 // === example test case ===
-export function multiply(a, b) {
+export function multiply(a:Number, b:Number) {
     return a * b;
 }
 
