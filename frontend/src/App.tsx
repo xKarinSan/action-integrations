@@ -35,7 +35,10 @@ function App() {
 
     const submitEvent = async (submitEvent: RegisteredEvent) => {
         // console.info("submitEvent", submitEvent);
-        await axios.post(import.meta.env.VITE_APP_BACKEND+"/api/event", submitEvent);
+        return axios.post(
+            import.meta.env.VITE_APP_BACKEND + "/api/event",
+            submitEvent
+        );
     };
     return (
         <>

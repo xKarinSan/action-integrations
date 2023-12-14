@@ -10,6 +10,7 @@ import {
     FormLabel,
     Button,
     FormControl,
+    useToast,
 } from "@chakra-ui/react";
 
 // ======== type imports ========
@@ -21,9 +22,19 @@ import { RegisteredEvent } from "../types/EventType";
 function CalendarForm({
     submitForm,
 }: {
-    submitForm: (event: RegisteredEvent) => void;
+    submitForm: (event: RegisteredEvent) => Promise<any>;
 }) {
+    const toast = useToast({
+        position: "top",
+        duration: 3000,
+        isClosable: true,
+    });
+
     //  =========== helper functions ===========
+    const resetToDefault = () => {
+        setChosenDateTime(formattedFormDate(new Date()));
+        setEventName("");
+    };
     const formattedFormDate = (inputDate: Date) => {
         const year = inputDate.getFullYear();
         const month = inputDate.getMonth() + 1;
@@ -46,12 +57,33 @@ function CalendarForm({
             name: eventName,
             event_date: dateTimestamp,
         };
-        await submitForm(newEvent);
+        await submitForm(newEvent)
+            .then((res: any) => {
+                console.info("res", res);
+                if (res && res.data) {
+                    toast({
+                        title: res.data.message,
+                        status: "success",
+                    });
+                    resetToDefault();
+                } else {
+                    toast({
+                        title: "Something went wrong, try again later",
+                        status: "error",
+                    });
+                }
+            })
+            .catch(() => {
+                toast({
+                    title: "Something went wrong, try again later",
+                    status: "error",
+                });
+            });
     };
 
     const cancelSubmission = () => {
-        // this resets to default
         console.warn("back to default");
+        resetToDefault()
     };
     //  =========== states ===========
     const [chosenDateTime, setChosenDateTime] = useState<string>(
