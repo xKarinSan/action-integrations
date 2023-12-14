@@ -14,7 +14,6 @@ import NotFound from "../assets/notfound.gif";
 function EventList({ events }: { events: RegisteredEvent[] }) {
     //  =========== helper functions ===========
     const formattedDate = (timestampDate: number) => {
-        console.log("[formattedDate] timestampDate", timestampDate);
         const date = new Date(timestampDate * 1000);
         const year = date.getFullYear();
         const month = date.getMonth() + 1;
@@ -22,7 +21,10 @@ function EventList({ events }: { events: RegisteredEvent[] }) {
         const hour = date.getHours();
         const minute = date.getMinutes();
         const second = date.getSeconds();
-        return `${day}/${month}/${year} ${hour}:${minute}:${second}`;
+
+        return `${day}/${month}/${year} ${hour >= 10 ? hour : "0" + hour}:${
+            minute >= 10 ? minute : "0" + minute
+        }:${second >= 10 ? second : "0" + second}`;
     };
     return (
         <Card
@@ -37,34 +39,38 @@ function EventList({ events }: { events: RegisteredEvent[] }) {
             <>
                 {events && events.length > 0 ? (
                     <Container data-testid="eventlist-container">
-                        {events.map((event: RegisteredEvent) => {
-                            const { id, name, event_date } = event;
-                            console.info("event", event);
-                            return (
-                                <Card
-                                    key={id}
-                                    background={"#5773ff"}
-                                    margin={"10px"}
-                                    color={"white"}
-                                >
-                                    <Heading
-                                        as={"h4"}
-                                        size={"lg"}
-                                        textAlign={"left"}
-                                        padding={"5px 5px 5px 20px"}
-                                        fontWeight={"normal"}
+                        {events
+                            .sort((a, b) => {
+                                return b.event_date - a.event_date;
+                            })
+                            .map((event: RegisteredEvent) => {
+                                const { id, name, event_date } = event;
+                                console.info("event", event);
+                                return (
+                                    <Card
+                                        key={id}
+                                        background={"#5773ff"}
+                                        margin={"10px"}
+                                        color={"white"}
                                     >
-                                        Name: {name}
-                                    </Heading>
-                                    <Text
-                                        textAlign={"left"}
-                                        padding={"5px 5px 5px 20px"}
-                                    >
-                                        Date: {formattedDate(event_date)}
-                                    </Text>
-                                </Card>
-                            );
-                        })}
+                                        <Heading
+                                            as={"h4"}
+                                            size={"lg"}
+                                            textAlign={"left"}
+                                            padding={"5px 5px 5px 20px"}
+                                            fontWeight={"normal"}
+                                        >
+                                            Name: {name}
+                                        </Heading>
+                                        <Text
+                                            textAlign={"left"}
+                                            padding={"5px 5px 5px 20px"}
+                                        >
+                                            Date: {formattedDate(event_date)}
+                                        </Text>
+                                    </Card>
+                                );
+                            })}
                     </Container>
                 ) : (
                     <Card

@@ -12,25 +12,16 @@ import { RegisteredEvent } from "./types/EventType";
 
 // ======================== main app ========================
 function App() {
-    const [events, setEvents] = useState<RegisteredEvent[]>([
-        // {
-        //     id: "1",
-        //     name: "idk",
-        //     event_date: Math.floor(new Date().getTime() / 1000),
-        // },
-        // {
-        //     id: "2",
-        //     name: "testt",
-        //     event_date: Math.floor(new Date().getTime() / 1000),
-        // },
-        // {
-        //     id: "3",
-        //     name: "1234",
-        //     event_date: Math.floor(new Date().getTime() / 1000),
-        // },
-    ]);
+    const [events, setEvents] = useState<RegisteredEvent[]>([]);
+    const getAllEvents = async () => {
+        const response = await axios.get(
+            import.meta.env.VITE_APP_BACKEND + "/api/event"
+        );
+        console.info("response", response);
+        setEvents(response.data.events);
+    };
     useEffect(() => {
-        setEvents([]);
+        getAllEvents();
     }, []);
 
     const submitEvent = async (submitEvent: RegisteredEvent) => {
@@ -42,8 +33,11 @@ function App() {
     };
     return (
         <>
+            <CalendarForm
+                submitForm={submitEvent}
+                refreshFunction={getAllEvents}
+            />
             <EventList events={events} />
-            <CalendarForm submitForm={submitEvent} />
         </>
     );
 }

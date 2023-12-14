@@ -21,8 +21,10 @@ import { RegisteredEvent } from "../types/EventType";
 // ======================== main app ========================
 function CalendarForm({
     submitForm,
+    refreshFunction,
 }: {
     submitForm: (event: RegisteredEvent) => Promise<any>;
+    refreshFunction: () => Promise<void>;
 }) {
     const toast = useToast({
         position: "top",
@@ -58,7 +60,7 @@ function CalendarForm({
             event_date: dateTimestamp,
         };
         await submitForm(newEvent)
-            .then((res: any) => {
+            .then(async (res: any) => {
                 console.info("res", res);
                 if (res && res.data) {
                     toast({
@@ -66,14 +68,17 @@ function CalendarForm({
                         status: "success",
                     });
                     resetToDefault();
+                    await refreshFunction();
                 } else {
                     toast({
                         title: "Something went wrong, try again later",
                         status: "error",
                     });
+                    await refreshFunction();
                 }
             })
-            .catch(() => {
+            .catch((err) => {
+                console.warn("err",err)
                 toast({
                     title: "Something went wrong, try again later",
                     status: "error",
@@ -83,7 +88,7 @@ function CalendarForm({
 
     const cancelSubmission = () => {
         console.warn("back to default");
-        resetToDefault()
+        resetToDefault();
     };
     //  =========== states ===========
     const [chosenDateTime, setChosenDateTime] = useState<string>(
