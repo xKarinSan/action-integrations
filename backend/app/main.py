@@ -16,7 +16,8 @@ from backend.app.routers.EventRouters import event_router
 load_dotenv()
 # ====== init the fastAPI instance & configurations ======
 app = FastAPI()
-origins =['http://localhost:8000']
+frontend_url = os.getenv("FRONTEND_URL")
+origins =[frontend_url]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,

@@ -26,8 +26,15 @@ function EventList({ events }: { events: RegisteredEvent[] }) {
         return `${day}/${month}/${year} ${hour}:${minute}:${second}`;
     };
     return (
-        <Card border={"10px red"} background={"white"} width={["90%", "60%"]}>
-            <Heading as={"h2"}>Event List</Heading>
+        <Card
+            border={"10px red"}
+            background={"white"}
+            width={["90%", "60%"]}
+            margin={"auto"}
+        >
+            <Heading as={"h2"} fontWeight={"normal"}>
+                Event List
+            </Heading>
             <>
                 {events && events.length > 0 ? (
                     <Container data-testid="eventlist-container">
@@ -46,7 +53,7 @@ function EventList({ events }: { events: RegisteredEvent[] }) {
                                         size={"lg"}
                                         textAlign={"left"}
                                         padding={"5px 5px 5px 20px"}
-                                        // paddingLeft={"20px"}
+                                        fontWeight={"normal"}
                                     >
                                         Name: {name}
                                     </Heading>
