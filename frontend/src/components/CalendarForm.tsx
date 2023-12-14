@@ -68,17 +68,18 @@ function CalendarForm({
                         status: "success",
                     });
                     resetToDefault();
-                    await refreshFunction();
                 } else {
                     toast({
                         title: "Something went wrong, try again later",
                         status: "error",
                     });
-                    await refreshFunction();
                 }
             })
+            .then(async () => {
+                await refreshFunction();
+            })
             .catch((err) => {
-                console.warn("err",err)
+                console.warn("err", err);
                 toast({
                     title: "Something went wrong, try again later",
                     status: "error",
