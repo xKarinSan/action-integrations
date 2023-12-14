@@ -17,11 +17,13 @@ jobs:
       AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
       LAMBDA_FUNCTION_NAME: ${{ secrets.LAMBDA_FUNCTION_NAME }}
       BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
-       
+  
+  frontend_cicd:
+    uses: ./.github/workflows/frontend_cicd.yml
   # sends a tele message to upload sucessful changes
   notification_job:
     uses: ./.github/workflows/notifier.yml
-    needs: backend_cicd
+    needs: [backend_cicd, frontend_cicd]
     secrets:
       TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
       TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
