@@ -18,7 +18,7 @@ load_dotenv()
 app = FastAPI()
 frontend_url = os.getenv("FRONTEND_URL")
 print("frontend_url",frontend_url)
-origins =[frontend_url]
+origins = [frontend_url]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,

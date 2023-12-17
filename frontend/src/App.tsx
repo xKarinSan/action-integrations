@@ -17,7 +17,7 @@ function App() {
         const response = await axios.get(
             import.meta.env.VITE_APP_BACKEND + "/api/event"
         );
-        console.info("response", response);
+        // console.info("response", response);
         setEvents(response.data.events);
     };
     useEffect(() => {
