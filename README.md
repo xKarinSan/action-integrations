@@ -36,7 +36,7 @@ Here are the list of dependencies or requirements needed to run the project.
 ## Setting Up
 **FIRST and FOREMOST, clone this repository**
 ```
-   git clone https://github.com/xkarinsan/action-integrations.git
+git clone https://github.com/xkarinsan/action-integrations.git
 ```
 
 ### Frontend Setup
