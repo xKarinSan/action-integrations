@@ -109,7 +109,7 @@ Refer [here](https://github.com/xKarinSan/action-integrations/tree/main/.github/
 
 ### Backend
 Refer [here](https://github.com/xKarinSan/action-integrations/blob/main/amplify.yml).
-**TLDR: Frontend automated testing inside AWS Amplify auto deployment
+**TLDR: Frontend automated testing inside AWS Amplify auto deployment**
 
 
 ## Environment Variables
