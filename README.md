@@ -107,6 +107,10 @@ Refer [here](https://github.com/xKarinSan/action-integrations/tree/main/.github/
 3. Upload the contents from the previous step to Amazon S3
 4. Deploy the contents from the previous step to Amazon Lambda
 
+### Backend
+Refer [here](https://github.com/xKarinSan/action-integrations/blob/main/amplify.yml).
+**TLDR: Frontend automated testing inside AWS Amplify auto deployment
+
 
 ## Environment Variables
 
