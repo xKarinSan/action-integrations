@@ -1,6 +1,10 @@
 #  🚜 Farm Stack Test 
 This is a simple sample of a FARM stack applcation built from ground up, inclusive of github actions, automated testings and deployment to AWS. 
 
+## Architecture Diagram
+<img width="588" alt="image" src="https://github.com/xKarinSan/action-integrations/assets/47315402/ab45ab21-1ddc-48e3-b54b-7c5ae454afc3">
+
+
 
 ## Dependencies
 Here are the list of dependencies or requirements needed to run the project.
